@@ -1,0 +1,11 @@
+node_modules/
+dist/
+release/
+release-signed/
+web-ext-artifacts/
+*.zip
+*.xpi
+.env
+.env.*
+.DS_Store
+*.local

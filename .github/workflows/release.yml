@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Require Mozilla API secrets
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          if [ -z "$WEB_EXT_API_KEY" ] || [ -z "$WEB_EXT_API_SECRET" ]; then
+            echo "::error::AMO_JWT_ISSUER and AMO_JWT_SECRET secrets are required for a permanent installable build."
+            echo "Create keys at https://addons.mozilla.org/developers/addon/api/key/"
+            echo "Then add them in GitHub → Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+
+      - name: Sign with Mozilla (unlisted / permanent install)
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          mkdir -p release
+          npx web-ext sign \
+            --source-dir dist \
+            --channel unlisted \
+            --artifacts-dir release-signed \
+            --amo-metadata ./amo-metadata.json
+          SIGNED=$(ls release-signed/*.xpi | head -n 1)
+          cp "$SIGNED" "release/ai-chat-rtl.xpi"
+          echo "Signed package: $SIGNED"
+
+      - name: Delete older releases (keep only this tag)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release list --limit 100 --json tagName -q '.[].tagName' | while read -r tag; do
+            if [ "$tag" != "${GITHUB_REF_NAME}" ]; then
+              echo "Deleting release $tag"
+              gh release delete "$tag" --yes --cleanup-tag || true
+            fi
+          done
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: AI Chat RTL ${{ github.ref_name }}
+          files: release/ai-chat-rtl.xpi
+          fail_on_unmatched_files: true
+          generate_release_notes: false
+          body: |
+            Download **`ai-chat-rtl.xpi`** from Assets.
+            Firefox usually offers to install it — just hit **Add**.
+
+            ### If it doesn't install automatically
+            1. Open `about:addons`
+            2. Click the gear ⚙️
+            3. **Install Add-on From File…**
+            4. Select the `xpi` file

@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "AI Chat RTL",
+  "version": "2.1.1",
+  "description": "راست‌چین کردن چت Gemini، ChatGPT و Claude برای فارسی و عربی",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ai-chat-rtl@mngh-27",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://gemini.google.com/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://claude.ai/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    },
+    "default_title": "AI Chat RTL"
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://gemini.google.com/*",
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*"
+      ],
+      "css": ["content.css"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "ai-chat-rtl",
+  "version": "2.1.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsc --noEmit && vite build && vite build --config vite.content.config.ts && vite build --config vite.background.config.ts",
+    "build:popup": "vite build",
+    "build:content": "vite build --config vite.content.config.ts",
+    "build:background": "vite build --config vite.background.config.ts",
+    "pack": "npm run build && node scripts/pack.mjs",
+    "lint:ext": "npm run build && web-ext lint --source-dir dist",
+    "sign": "npm run pack && web-ext sign --source-dir dist --channel unlisted --artifacts-dir release --amo-metadata ./amo-metadata.json"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "tailwindcss": "^4.1.4",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.3",
+    "vite-plugin-static-copy": "^2.3.1",
+    "web-ext": "^8.6.0"
+  }
+}

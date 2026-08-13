@@ -1,0 +1,76 @@
+/* RTL only for chat messages + composer — never page chrome / sidebar */
+
+html[data-ai-chat-rtl="on"] {
+  --ai-chat-rtl-font: "Vazirmatn", "Tahoma", "Segoe UI", sans-serif;
+}
+
+/* ---- Gemini: messages + input ---- */
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] .model-response-text,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] .response-content,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] message-content .markdown,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] .query-text,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] .user-query .query-text,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] rich-textarea .ql-editor,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] .text-input-field .ql-editor,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="gemini"] .input-area .ql-editor {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+  font-family: var(--ai-chat-rtl-font);
+}
+
+/* ---- ChatGPT: messages + input ---- */
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="chatgpt"] [data-message-author-role],
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="chatgpt"] [data-message-author-role] .markdown,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="chatgpt"] [data-message-author-role] .whitespace-pre-wrap,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="chatgpt"] #prompt-textarea,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="chatgpt"] form .ProseMirror {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+  font-family: var(--ai-chat-rtl-font);
+}
+
+/* ---- Claude: messages + input ---- */
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="claude"] [data-testid="user-message"],
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="claude"] [data-testid="assistant-message"],
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="claude"] .font-claude-response,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="claude"] .font-user-message,
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="claude"] fieldset div[contenteditable="true"],
+html[data-ai-chat-rtl="on"][data-ai-chat-rtl-site="claude"] [data-testid="chat-input"] .ProseMirror {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+  font-family: var(--ai-chat-rtl-font);
+}
+
+/* ---- Keep code / math LTR inside chat ---- */
+html[data-ai-chat-rtl="on"] [data-message-author-role] pre,
+html[data-ai-chat-rtl="on"] [data-message-author-role] code,
+html[data-ai-chat-rtl="on"] .model-response-text pre,
+html[data-ai-chat-rtl="on"] .model-response-text code,
+html[data-ai-chat-rtl="on"] .markdown pre,
+html[data-ai-chat-rtl="on"] .markdown code,
+html[data-ai-chat-rtl="on"] .font-claude-response pre,
+html[data-ai-chat-rtl="on"] .font-claude-response code,
+html[data-ai-chat-rtl="on"] [data-testid="assistant-message"] pre,
+html[data-ai-chat-rtl="on"] [data-testid="assistant-message"] code,
+html[data-ai-chat-rtl="on"] .code-block,
+html[data-ai-chat-rtl="on"] .hljs,
+html[data-ai-chat-rtl="on"] [class*="code-block"],
+html[data-ai-chat-rtl="on"] [class*="CodeBlock"],
+html[data-ai-chat-rtl="on"] .katex,
+html[data-ai-chat-rtl="on"] mjx-container,
+html[data-ai-chat-rtl="on"] .math {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed;
+}
+
+html[data-ai-chat-rtl="on"] .markdown ul,
+html[data-ai-chat-rtl="on"] .markdown ol,
+html[data-ai-chat-rtl="on"] .model-response-text ul,
+html[data-ai-chat-rtl="on"] .model-response-text ol {
+  padding-right: 1.5em !important;
+  padding-left: 0 !important;
+}
