@@ -17,9 +17,17 @@ If it doesn't install automatically:
 
 ## What it does
 
-A small Firefox extension that fixes RTL for AI chats when you're writing or reading Persian/Arabic.
+A small Firefox extension that automatically fixes text direction in AI chats.
 
-It only flips the chat area — sidebar and the rest of the UI stay as they are. Code blocks and math stay LTR.
+It checks each chat message and the prompt input as you type:
+
+- Text containing Persian or Arabic characters is displayed RTL and aligned to the right.
+- English-only text is left untouched and keeps the website's original layout.
+- Mixed Persian/English text is displayed RTL for easier reading.
+- Persian and Arabic text uses the bundled Vazirmatn font for better readability.
+- Code blocks and math always stay LTR.
+
+Only the chat area is affected. The sidebar and the rest of the website UI stay as they are.
 
 Works with:
 
@@ -31,4 +39,4 @@ You can turn RTL on/off per site from the toolbar icon.
 
 ## About the project
 
-Personal repo. The goal was just making these chats readable in RTL. If something breaks or a site stops working, open an Issue.
+Personal repo. The goal is to make Persian and Arabic AI chats easier to read without changing English conversations or the rest of the website. If something breaks or a site stops working, open an Issue.
